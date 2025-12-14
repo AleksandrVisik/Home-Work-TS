@@ -1,78 +1,9 @@
 'use strict';
 
+import { isFinite } from './isFinite';
+import { isSafeNumber } from './isSafeNumber';
+import { makeOrdinal } from './makeOrdinal';
 
-function makeOrdinal(words: string): string {
-    const ORDINALS: Record<string, string> = {
-        zero: 'zeroth',
-        one: 'first',
-        two: 'second',
-        three: 'third',
-        four: 'fourth',
-        five: 'fifth',
-        six: 'sixth',
-        seven: 'seventh',
-        eight: 'eighth',
-        nine: 'ninth',
-        ten: 'tenth',
-        eleven: 'eleventh',
-        twelve: 'twelfth',
-        thirteen: 'thirteenth',
-        fourteen: 'fourteenth',
-        fifteen: 'fifteenth',
-        sixteen: 'sixteenth',
-        seventeen: 'seventeenth',
-        eighteen: 'eighteenth',
-        nineteen: 'nineteenth',
-        twenty: 'twentieth',
-        thirty: 'thirtieth',
-        forty: 'fortieth',
-        fifty: 'fiftieth',
-        sixty: 'sixtieth',
-        seventy: 'seventieth',
-        eighty: 'eightieth',
-        ninety: 'ninetieth',
-        hundred: 'hundredth',
-        thousand: 'thousandth',
-        million: 'millionth',
-        billion: 'billionth',
-        trillion: 'trillionth',
-        quadrillion: 'quadrillionth'
-    };
-
-    // Разделяем строку на отдельные слова
-    const parts = words.split(/\s+/);
-
-    // Последнее слово определяет порядок числительного
-    const lastWord = parts.pop();
-
-    // Проверяем наличие порядка для последнего слова
-    if (lastWord && ORDINALS[lastWord]) {
-        parts.push(ORDINALS[lastWord]);
-    } else {
-        parts.push(lastWord || '');
-    }
-
-    // Возвращаем соединённую строку
-    return parts.join(' ');
-}
-
-function isFinite(value: any): value is number {
-    return (
-        typeof value === 'number' &&
-        value !== Infinity &&
-        value !== -Infinity &&
-        !Number.isNaN(value)
-    );
-}
-
-function isSafeNumber(value: number): boolean {
-    // Минимально и максимально возможные безопасные целые числа
-    const MIN_SAFE_INTEGER = -(2 ** 53);
-    const MAX_SAFE_INTEGER = 2 ** 53 - 1;
-
-    // Проверяем, попадает ли значение в безопасный диапазон
-    return Number.isInteger(value) && value >= MIN_SAFE_INTEGER && value <= MAX_SAFE_INTEGER;
-}
 
 const TEN: number = 10;
 const ONE_HUNDRED: number = 100;
@@ -98,7 +29,7 @@ function toWords(number: number | string, asOrdinal?: boolean): string {
     let words: string | undefined ;
     const num: number = parseInt(number.toString(), 10);
 
-    if (!isFinite(num)) {
+    if (!isFinite({ value: num })) {
         throw new TypeError(`Не является конечным числом: ${number} (${typeof number})`);
     }
     if (!isSafeNumber(num)) {
@@ -112,7 +43,7 @@ function toWords(number: number | string, asOrdinal?: boolean): string {
 
 function generateWords(number: number, words?: string[]): string {
     let remainder: number = 0;
-	let word: string  | any= ""
+	let word: string = ""
 
     if (number === 0) {
         return !words ? 'zero' : words.join(' ').replace(/,$/, '');
