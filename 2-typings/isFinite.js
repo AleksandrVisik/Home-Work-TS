@@ -7,4 +7,3 @@ function isFinite({ value }) {
         value !== -Infinity &&
         !Number.isNaN(value));
 }
-//# sourceMappingURL=isFinite.js.map

@@ -87,4 +87,3 @@ console.log(toWords(25));
 console.log(toWords(100500));
 console.log(toWords(1));
 console.log(toWords(-100));
-//# sourceMappingURL=app.js.map

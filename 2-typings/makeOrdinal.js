@@ -52,4 +52,3 @@ function makeOrdinal(words) {
     // Возвращаем соединённую строку
     return parts.join(' ');
 }
-//# sourceMappingURL=makeOrdinal.js.map
