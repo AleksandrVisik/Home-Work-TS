@@ -8,4 +8,3 @@ function isSafeNumber(value) {
     // Проверяем, попадает ли значение в безопасный диапазон
     return Number.isInteger(value) && value >= MIN_SAFE_INTEGER && value <= MAX_SAFE_INTEGER;
 }
-//# sourceMappingURL=isSafeNumber.js.map
